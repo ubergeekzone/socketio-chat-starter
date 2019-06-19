@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Socket.IO chat</title>
+  </head>
+  <body>
+    <ul></ul>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+      var nsp = prompt("What's your namespace?")
+      var socket = io("http://localhost:3000/"+nsp, {transports: ['websocket'], upgrade: false});
+      var username = "";
+
+
+      function startup(domain, callback) {
+        callback(domain)
+      }
+
+      startup("/"+nsp, function(domain) {
+
+        socket.on('connect', function () {
+          username = prompt("What's your name?");
+
+          socket.emit('login', {nsp: domain, username: username});
+
+          socket.emit('joinRoom', {user: username, room: "public"});
+
+          socket.emit('sendMessage', {user: username, msg: "hello"});
+
+        });
+
+        socket.on('nsp', (data) => {
+          console.log(data);
+        });
+
+        socket.on('updateMessages', (data) => {
+          console.log(data);
+        });
+
+        socket.on('join', (data) => {
+          console.log(data);
+        });
+
+        socket.on('exit', (data) => {
+          console.log(data);
+        });
+
+
+        socket.on('disconnect', function(onlineUsers) {
+        });
+
+        socket.on('onlineUsers', function(onlineUsers){
+          $("ul").empty();
+          $.each(onlineUsers, function(index, user) {
+            $("ul").prepend($("<li/>").text(user.username))
+          });
+        });
+
+      });
+
+
+
+
+  </script>
+  </body>
+</html>
