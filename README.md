@@ -9,4 +9,4 @@ cd socketio && node server/index.js
 - Join and Left Events
 - Send Messages to Room
 
-please fell free to extend or make pull requests, the goal here is to make a light weight chat room solution.
+please feel free to extend or make pull requests, the goal here is to make a light weight chat room solution.
