@@ -8,5 +8,6 @@ cd socketio && node server/index.js
 - Rooms
 - Join and Left Events
 - Send Messages to Room
+- Online User List
 
 please feel free to extend or make pull requests, the goal here is to make a light weight chat room solution.
