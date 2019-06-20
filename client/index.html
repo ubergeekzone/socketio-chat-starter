@@ -2,66 +2,374 @@
 <html>
   <head>
     <title>Socket.IO chat</title>
+		<link rel="stylesheet" type="text/css" src="assets/css/chat.css" />
+    <style>
+    @import url('https://fonts.googleapis.com/css?family=Open+Sans');
+    #vue-chatroom #frame {
+    	border-left: 1px solid #979797;
+    	border-right: 1px solid #979797;
+    	position: relative;
+    	-webkit-font-smoothing: antialiased;
+    	-moz-osx-font-smoothing: grayscale;
+    	font-family: 'Open Sans', sans-serif;
+    	position: relative;
+      height:500px;
+    }
+
+    .col {
+    	float: left;
+    }
+
+    #vue-chatroom .actions, #vue-chatroom .actions textarea {
+    	width: 100% !important;
+    }
+
+    #vue-chatroom #title {
+    	padding: 10px;
+    	background-color: #000;
+    	padding: 10px;
+    	color: #FFF;
+    	font-weight: bold;
+    	font-size: 20px;
+    	margin: 0;
+    	border-top: 1px solid #000;
+    	font-family: 'Open Sans', sans-serif;
+    }
+
+    #vue-chatroom #frame .online {
+    	border-right: 1px solid #000;
+    	padding-top: 0;
+    	width: 25%;
+    	height: 100%;
+    	overflow-y: auto;
+    	-ms-overflow-style: none;
+    	overflow: -moz-scrollbars-none;
+    }
+
+    #vue-chatroom #frame .online::-webkit-scrollbar,
+    #vue-chatroom #frame .chat::-webkit-scrollbar {
+    	display: none;
+    }
+
+    .time {
+    	font-size: 12px !important;
+    	color: grey;
+    	display: none;
+    	position: absolute;
+       right: 0;
+       padding-right: 5px;
+    }
+
+    button {
+    	padding: initial;
+    	padding-left: 5px;
+    	padding-right: 5px;
+    	border-radius: 0;
+    }
+
+    #vue-chatroom #frame .online ul {
+    	list-style-type: none;
+    	padding: 10px;
+    	padding-top: 0;
+    	padding-bottom: 0;
+    }
+
+    #vue-chatroom #frame .online ul li {
+    	padding-top: 5px;
+    	padding-bottom: 5px;
+    }
+
+    #vue-chatroom #frame .online ul li .avatar,
+    #vue-chatroom #frame .chat div .from .avatar {
+    	vertical-align: middle;
+    	width: 24px;
+    	height: 24px;
+    	border-radius: 50%;
+    }
+
+    #vue-chatroom #frame .chat div .from {
+    	display: inline-block;
+    }
+
+    #vue-chatroom #frame .chat div .from span {
+    	margin-left: 10px;
+    	font-weight: bold;
+    }
+
+    .con {
+    	height: 100%
+    }
+
+    .joined,
+    .left {
+    	font-style: italic;
+    	color: #333333;
+    	padding-left: 10px;
+    	padding-right: 10px;
+    	padding-top: 5px;
+    	padding-bottom: 5px;
+    }
+
+    #vue-chatroom #frame .chat div .from span,
+    #vue-chatroom #frame .chat div span {
+    	vertical-align: middle;
+    	font-size: 14px;
+    }
+
+    #vue-chatroom #frame .chat .welcome {
+    	margin: 20;
+    	text-align: center;
+    	padding-top: 20px;
+    }
+
+    .padding {
+    	padding: 10px;
+    }
+
+    #vue-chatroom #frame .online ul li a {
+    	margin-left: 5px;
+    	font-size: 13.5px;
+    	text-decoration: none;
+    	color: #000;
+    	box-shadow: none;
+    }
+
+    #vue-chatroom #frame .online .list {
+    	display: block;
+    }
+
+    #vue-chatroom .actions textarea {
+    	height:100px;
+    }
+
+
+    .actions {
+    	display: flex;
+    	clear: both;
+    	border-left: 1px solid #000;
+    	border-right: 1px solid #000;
+    	border-bottom: 1px solid #000;
+    }
+
+    .actions button {
+    	background-color: #000;
+    	color: #FFF;
+    }
+
+    #vue-chatroom #frame input {
+    	flex: 1;
+    }
+
+    #vue-chatroom #frame .chat {
+    	overflow-x: hidden;
+    	overflow-y: scroll;
+    	width: 75%;
+    	position: absolute;
+    	top: 0;
+    	right: 0;
+    	height: 100%;
+    	-ms-overflow-style: none;
+    	overflow: -moz-scrollbars-none;
+    }
+
+    body #cometchat {
+    	display: none;
+    }
+
+    .pull-left {
+    	float: left;
+    }
+
+    .pull-right {
+    	float: right;
+    }
+
+    #vue-chatroom #title a {
+    	color: #fff;
+    }
+
+    #vue-chatroom #frame #panel-settings {
+    	position: absolute;
+    	top: 0;
+    	right: 0;
+    	background-color: #fff;
+    	height: 100%;
+    	width: 50%;
+    	z-index: 1;
+    	display: none;
+    	border-left: 1px solid #979797;
+    }
+
+    #vue-chatroom #frame #panel-settings h3 {
+    	font-size: 17px;
+    }
+
+    #vue-chatroom #frame #panel-settings #body {
+    	padding: 10px;
+    }
+
+    .user-message .delete-message,
+    .delete-message {
+    	position: absolute;
+    	right: 0;
+    	display: none;
+    	padding-top:15px;
+    	box-shadow:none;
+    }
+
+    .user-message .delete-message {
+    	color: #000;
+    	text-decoration: none;
+    }
+
+    .user-message:hover .delete-message {
+    	display: inline-block;
+    }
+
+    .vcw-context {
+    	display: none;
+    	width: auto;
+    	height: auto;
+    	background-color: #fff;
+    	border: 1px solid #979797;
+    	padding: 10px;
+    	font-size: 12px;
+    	cursor: pointer;
+    }
+
+    .vcw-context ul {
+    	margin: 0;
+    }
+
+    .vcw-color-picker {
+    	display:none;
+    }
+
+    .wp-picker-container {
+    	display: inline-block;
+    }
+
+    .wp-picker-container .wp-color-result.button {
+    	height: initial;
+    }
+
+    	#vue-chatroom #title .user-list {
+    		display:none;
+    	}
+
+    .vcw-error {
+    	display:none;
+    	color:red;
+    	font-weight:bold;
+    	text-align:center;
+    	padding-bottom:10px;
+    	font-family: 'Open Sans', sans-serif;
+    }
+
+    .emojionearea .emojionearea-editor {
+    	min-height: 5em !important;
+    	max-height: 5em !important;
+    }
+
+    img.emoji {
+    	font-size:18px;
+    }
+
+    @media screen and (max-width:415px) {
+    	#vue-chatroom #frame .online {
+    		display: none;
+    		position: absolute;
+    		width: 100%;
+    		z-index: 1;
+    		background-color: #fff;
+    	}
+    	#vue-chatroom #title span {
+    		display:none;
+    	}
+    	#vue-chatroom #frame .chat {
+    		width: 100%;
+    	}
+    	.actions button {
+    		text-indent: -999px;
+    	}
+    	.actions button:after {
+    		text-indent: 0px;
+    		float: left;
+    		font-family: "FontAwesome";
+    		font-weight: 900;
+        	content: '\f0a9';
+    		font-size:20px;
+      }
+    	#vue-chatroom #frame #panel-settings {
+    		width:100%;
+    	}
+
+    	#vue-chatroom #title .fa-external-link {
+    		display:block;
+    	}
+
+    	#vue-chatroom #title .user-list {
+    		display: block;
+    	}
+    }
+    </style>
   </head>
   <body>
-    <ul></ul>
+
+    <div class="vcw-error"></div>
+
+	<div id="vue-chatroom">
+
+		<h2 id="title">
+			<span>Chat Starter</span></h2>
+		<div id="frame">
+
+			<div id="panel-settings">
+				<h3>Settings</h3>
+				<div id="body">
+					<input type="checkbox" name="mute_sounds"> Mute Sounds
+					<br>
+					<input type="checkbox" class="vcw-color-picker" name="text_color"> Pick Text Color
+				</div>
+			</div>
+
+			<div class="con">
+
+				<div class="online col">
+          <ul></ul>
+				</div>
+
+				<div class="chat col">
+
+					<div class="welcome">
+						Welcome, Messages will show here once a member has sent a message in the chatroom.
+					</div>
+
+					<div class="message">
+						<div class="from"></div>
+						<span></span>
+					</div>
+
+				</div>
+
+			</div>
+
+			<div class="clear clearfix" style="clear:both;">
+
+			</div>
+
+		</div>
+
+		<div class="actions">
+			<textarea rows="2"></textarea>
+			<!--<input type="text">--> <button>Send</button>
+		</div>
+
+	</div>
+
+
     <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script>
-      var nsp = prompt("What's your namespace?")
-      var socket = io("http://localhost:3000/"+nsp, {transports: ['websocket'], upgrade: false});
-      var username = "";
-
-
-      function startup(domain, callback) {
-        callback(domain)
-      }
-
-      startup("/"+nsp, function(domain) {
-
-        socket.on('connect', function () {
-          username = prompt("What's your name?");
-
-          socket.emit('login', {nsp: domain, username: username});
-
-          socket.emit('joinRoom', {user: username, room: "public"});
-
-          socket.emit('sendMessage', {user: username, msg: "hello"});
-
-        });
-
-        socket.on('nsp', (data) => {
-          console.log(data);
-        });
-
-        socket.on('updateMessages', (data) => {
-          console.log(data);
-        });
-
-        socket.on('join', (data) => {
-          console.log(data);
-        });
-
-        socket.on('exit', (data) => {
-          console.log(data);
-        });
-
-
-        socket.on('disconnect', function(onlineUsers) {
-        });
-
-        socket.on('onlineUsers', function(onlineUsers){
-          $("ul").empty();
-          $.each(onlineUsers, function(index, user) {
-            $("ul").prepend($("<li/>").text(user.username))
-          });
-        });
-
-      });
-
-
-
-
-  </script>
+    <script src="assets/js/chat.js"></script>
   </body>
 </html>

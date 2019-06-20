@@ -1,8 +1,8 @@
-# How To Run App
+## How To Chat Starter
 
 cd socketio && node server/index.js
 
-# V1 Features
+#### V1 Features
 
 - Multi Tenant Namespaces
 - Rooms
@@ -10,4 +10,7 @@ cd socketio && node server/index.js
 - Send Messages to Room
 - Online User List
 
-please feel free to extend or make pull requests, the goal here is to make a light weight chat room solution.
+#### V1.1 Change Log
+- Added UI for Online List and Sending/Displaying Chat Messages
+
+please feel free to extend or make pull requests, the goal here is to make a light weight powerful chat room solution.

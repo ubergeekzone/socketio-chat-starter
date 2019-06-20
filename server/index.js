@@ -1,6 +1,10 @@
-var app = require('express')();
+var express = require('express');
+var app = express();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
+var path = require('path');
+var public = path.join(__dirname, '/../client/assets/');
+
 var onlineUsers = {}, onlineUsersCount = 0;
 
 var connections = require(__dirname+"/connections.js");
@@ -15,11 +19,17 @@ var rooms = new rooms();
 var events = require(__dirname+"/events.js");
 var events = new events();
 
+app.use('/assets',express.static(public))
+
 app.get('/', function(req, res) {
   res.sendFile('client/index.html', {
     root: '.'
   });
 });
+
+console.log(public);
+
+
 
 io.of(/[A-Za-z]/).on('connection', function(socket) {
 
