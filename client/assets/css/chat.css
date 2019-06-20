@@ -20,18 +20,18 @@
 
 #vue-chatroom #title {
 	padding: 10px;
-	background-color: #A51E64;
+	background-color: #000;
 	padding: 10px;
 	color: #FFF;
 	font-weight: bold;
 	font-size: 20px;
 	margin: 0;
-	border-top: 1px solid #979797;
+	border-top: 1px solid #000;
 	font-family: 'Open Sans', sans-serif;
 }
 
 #vue-chatroom #frame .online {
-	border-right: 1px solid #A51E64;
+	border-right: 1px solid #000;
 	padding-top: 0;
 	width: 25%;
 	height: 100%;
@@ -50,8 +50,8 @@
 	color: grey;
 	display: none;
 	position: absolute;
-   right: 0;
-   padding-right: 5px;
+	 right: 0;
+	 padding-right: 5px;
 }
 
 button {
@@ -136,26 +136,17 @@ button {
 	height:100px;
 }
 
-#vue-chatroom #frame .online .mods h3,
-#vue-chatroom #frame .online .members h3,
-#vue-chatroom #frame #panel-settings h3 {
-	padding: 10px;
-	color: #000;
-	background-color: #E6C1D4;
-	font-size: 14px;
-	margin-bottom: 0;
-}
 
 .actions {
 	display: flex;
 	clear: both;
-	border-left: 1px solid #979797;
-	border-right: 1px solid #979797;
-	border-bottom: 1px solid #979797;
+	border-left: 1px solid #000;
+	border-right: 1px solid #000;
+	border-bottom: 1px solid #000;
 }
 
 .actions button {
-	background-color: #A51E64;
+	background-color: #000;
 	color: #FFF;
 }
 
@@ -300,9 +291,9 @@ img.emoji {
 		float: left;
 		font-family: "FontAwesome";
 		font-weight: 900;
-    	content: '\f0a9';
+			content: '\f0a9';
 		font-size:20px;
-  }
+	}
 	#vue-chatroom #frame #panel-settings {
 		width:100%;
 	}
