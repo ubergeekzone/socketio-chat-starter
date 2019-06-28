@@ -1,116 +1,57 @@
 <!doctype html>
 <html>
-  <head>
-    <title>Socket.IO chat</title>
-		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
-		<link rel="stylesheet" type="text/css" href="assets/css/chat.css" />
-    <style>
 
-    </style>
-  </head>
-  <body>
+<head>
+	<title>Socket.IO chat</title>
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/chat.css" />
+	<style>
 
-		<div class="ui bottom attached segment pushable">
-				<div class="ui visible inverted left vertical sidebar menu">
-				  <div class="item online-users">
-						<div class="header">Online Users</div>
-						<div class="menu"></div>
-				  </div>
-				</div>
-				<div class="pusher">
-				  <div class="ui basic segment">
-					<h3 class="ui block header">WP Chatkit</h3>
-					<div class="ui comments segment">
-							<div class="comment comment-blank">
-							
-							  <div class="content">
-								<a class="author"></a>
-								
-								<div class="text">
-								</div>
-							  </div>
-							</div>
+	</style>
+</head>
 
-				
-						
-						  </div>
-
-						  <form class="ui reply form">
-								<div class="field">
-								  <textarea></textarea>
-								</div>
-								<div class="ui blue labeled submit icon button">
-								  <i class="icon edit"></i> Send Message
-								</div>
-							  </form>
-				  </div>
-				</div>
-			  </div>
-
-    <div class="vcw-error"></div>
-
-	<div id="vue-chatroom">
-
-		<h2 id="title">
-			<span>Chat Starter</span></h2>
-		<div id="frame">
-
-			<div id="panel-settings">
-				<h3>Settings</h3>
-				<div id="body">
-					<input type="checkbox" name="mute_sounds"> Mute Sounds
-					<br>
-					<input type="checkbox" class="vcw-color-picker" name="text_color"> Pick Text Color
-				</div>
+<body>
+	<div class="ui bottom attached segment pushable">
+		<div class="ui visible inverted left vertical sidebar menu">
+			<div class="item online-users">
+				<div class="header">Online Users</div>
+				<div class="menu"></div>
 			</div>
-
-			<div class="con">
-
-				<div class="online col">
-          <ul></ul>
-				</div>
-
-				<div class="chat col">
-
-					<div class="welcome">
-						Welcome, Messages will show here once a member has sent a message in the chatroom.
-					</div>
-
-					<div class="message">
-						<div class="from"></div>
-						<span></span>
-					</div>
-
-				</div>
-
-			</div>
-
-			<div class="clear clearfix" style="clear:both;">
-
-			</div>
-
 		</div>
+		<div class="pusher">
+			<div class="ui basic segment">
+				<h3 class="ui block header">WP Chatkit</h3>
+				<div class="ui comments segment">
+					<div class="comment comment-blank">
+						<div class="content">
+							<a class="author"></a>
+							<div class="text"></div>
+						</div>
+					</div>
+				</div>
 
-		<div class="actions">
-			<textarea rows="2"></textarea>
-			<!--<input type="text">--> <button>Send</button>
+				<form class="ui reply form">
+					<div class="field">
+						<textarea></textarea>
+					</div>
+					<div class="ui blue labeled submit icon button">
+						<i class="icon edit"></i> Send Message
+					</div>
+				</form>
+			</div>
 		</div>
-
 	</div>
 
-
-    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 	<script src="assets/js/chat.js"></script>
-	
 	<script>
-$('.visible.example .ui.sidebar')
-  .sidebar({
-    context: '.visible.example .bottom.segment'
-  })
-  .sidebar('hide')
-;
+		$('.visible.example .ui.sidebar')
+			.sidebar({
+				context: '.visible.example .bottom.segment'
+			})
+			.sidebar('hide');
 	</script>
-  </body>
+</body>
 </html>
