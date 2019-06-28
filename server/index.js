@@ -3,6 +3,7 @@ var app = express();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 var path = require('path');
+
 var public = path.join(__dirname, '/../client/assets/');
 
 var onlineUsers = {}, onlineUsersCount = 0;
@@ -19,17 +20,17 @@ var rooms = new rooms();
 var events = require(__dirname+"/events.js");
 var events = new events();
 
-app.use('/assets',express.static(public))
+app.use('/assets',express.static(public));
 
-app.get('/', function(req, res) {
-  res.sendFile('client/index.html', {
-    root: '.'
-  });
+var chat = path.join(__dirname, '/../client/');
+app.use('/', express.static(chat));
+
+io.origins((origin, callback) => {
+  if (origin !== 'http://localhost:3002') {
+    return callback('origin not allowed', false);
+  }
+  callback(null, true);
 });
-
-console.log(public);
-
-
 
 io.of(/[A-Za-z]/).on('connection', function(socket) {
 
@@ -58,6 +59,6 @@ io.of(/[A-Za-z]/).on('connection', function(socket) {
 
 });
 
-http.listen(3000, function() {
-  console.log('listening on *:3000');
+http.listen(3002, function() {
+  console.log('listening on *:3002');
 });

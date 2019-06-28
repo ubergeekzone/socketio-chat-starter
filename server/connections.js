@@ -19,7 +19,7 @@ var connections = function() {
   self.disconnect = function(obj, callback) {
     callback(obj.socket.username);
     obj.onlineUsers[obj.socket.nsp.name].splice(obj.onlineUsers[obj.socket.nsp.name].indexOf(obj.socket.onlineUserArrayIndex), 1);
-    self.update({io: obj.io, onlineUsers: obj.onlineUsers});
+    self.update({io: obj.io, onlineUsers: obj.onlineUsers[obj.socket.nsp.name]});
   };
 
   self.update = function(obj) {

@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
-#vue-chatroom #frame {
+
+.comments {
+	max-width: 100% !important;
+}
+
+/*#vue-chatroom #frame {
 	border-left: 1px solid #979797;
 	border-right: 1px solid #979797;
 	position: relative;
@@ -306,3 +311,4 @@ img.emoji {
 		display: block;
 	}
 }
+*/
