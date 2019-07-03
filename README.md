@@ -20,4 +20,7 @@ cd socketio && npm install && node server/index.js
 - Added Orgins Blocking Based On Domain Name (stop namespace hijacking from being used by unauthorized sites)
 - Removed Old CSS from chat.css stylesheet
 
+#### V1.3 Change Log
+- Added AES 256 Bit Encryption For Messages
+
 please feel free to extend or make pull requests, the goal here is to make a light weight powerful chat room solution.

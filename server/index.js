@@ -3,8 +3,18 @@ var app = express();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 var path = require('path');
+var Sequelize = require('sequelize');
 
 var public = path.join(__dirname, '/../client/assets/');
+
+/*var sequelize = new Sequelize('database', 'username', 'password', {
+  host: 'localhost',
+  dialect: 'mysql'
+});
+
+
+
+console.log(sequelize);*/
 
 var onlineUsers = {}, onlineUsersCount = 0;
 
@@ -36,14 +46,15 @@ io.of(/[A-Za-z]/).on('connection', function(socket) {
 
   const nsp = socket.nsp;
 
-  connections.connect({io: nsp, socket: socket, onlineUsers: onlineUsers, onlineUsersCount: onlineUsersCount}, function(obj) {
+  connections.connect({io: nsp, socket: socket, onlineUsers: onlineUsers, onlineUsersCount: onlineUsersCount}, function(obj, secrectKey) {
     var currentRoom = "";
     rooms.join({io: io, socket: socket}, function(object) {
       currentRoom = object.room;
 
       events.join({io: io, socket: socket, username: object.user, room: currentRoom});
 
-      messages.send({io: io, socket: socket, room:currentRoom});
+
+      messages.send({io: io, socket: socket, room:currentRoom, secrectKey: secrectKey});
 
       socket.on('disconnect', function() {
         connections.disconnect({io: nsp, socket: socket, onlineUsers: onlineUsers}, function(user) {

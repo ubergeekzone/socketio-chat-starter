@@ -11,7 +11,7 @@ var connections = function() {
         obj.onlineUsers[objLogin.nsp].push({username: objLogin.username, index: obj.onlineUsers[objLogin.nsp].length});
       }
       self.update({io: obj.io, onlineUsers: obj.onlineUsers[objLogin.nsp]});
-      callback(obj.onlineUsers[objLogin.nsp]);
+      callback(obj.onlineUsers[objLogin.nsp], objLogin.secrectKey);
     });
     obj.onlineUsersCount++;
   };
