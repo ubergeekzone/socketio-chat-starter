@@ -16,7 +16,7 @@ var public = path.join(__dirname, '/../client/assets/');
 
 console.log(sequelize);*/
 
-var onlineUsers = {}, onlineUsersCount = 0;
+var onlineUsers = {}, onlineUsersCount = 0, onlinesecrectKeys = {};
 
 var connections = require(__dirname+"/connections.js");
 var connections = new connections();
@@ -36,7 +36,7 @@ var chat = path.join(__dirname, '/../client/');
 app.use('/', express.static(chat));
 
 io.origins((origin, callback) => {
-  if (origin !== 'http://localhost:3002') {
+  if (origin !== 'http://localhost:3003') {
     return callback('origin not allowed', false);
   }
   callback(null, true);
@@ -46,13 +46,12 @@ io.of(/[A-Za-z]/).on('connection', function(socket) {
 
   const nsp = socket.nsp;
 
-  connections.connect({io: nsp, socket: socket, onlineUsers: onlineUsers, onlineUsersCount: onlineUsersCount}, function(obj, secrectKey) {
+  connections.connect({io: nsp, socket: socket, onlineUsers: onlineUsers, onlineUsersCount: onlineUsersCount, onlinesecrectKeys: onlinesecrectKeys}, function(obj, secrectKey) {
     var currentRoom = "";
     rooms.join({io: io, socket: socket}, function(object) {
       currentRoom = object.room;
 
       events.join({io: io, socket: socket, username: object.user, room: currentRoom});
-
 
       messages.send({io: io, socket: socket, room:currentRoom, secrectKey: secrectKey});
 
@@ -70,6 +69,6 @@ io.of(/[A-Za-z]/).on('connection', function(socket) {
 
 });
 
-http.listen(3002, function() {
-  console.log('listening on *:3002');
+http.listen(3003, function() {
+  console.log('listening on *:3003');
 });

@@ -12,7 +12,8 @@ var messages = function() {
 
     obj.socket.on('sendMessage', function(message) {
       message_encrypt = enc.encrypt(JSON.stringify(message), obj.secrectKey);
-      obj.io.of(obj.socket.nsp.name).to(obj.room).emit('updateMessages', message_encrypt);
+      message_decrypt = enc.decrypt(message_encrypt,  obj.secrectKey);
+      obj.io.of(obj.socket.nsp.name).to(obj.room).emit('updateMessages', message_decrypt);
     });
 
   };
