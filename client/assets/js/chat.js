@@ -7,23 +7,12 @@ class WP_Chatkit {
     this.socket.on('connect_error', function(error) {
       console.log(error);
     });
-
-    if(!localStorage.getItem("secrectKey")) {
-      var secrectQuestion = window.location.hostname;
-      var secrectKey = CryptoJS.PBKDF2(secrectQuestion, CryptoJS.lib.WordArray.random(128 / 8), { keySize: 128/32, iterations: 1000 });
-      localStorage.setItem("secrectKey",secrectKey.toString(CryptoJS.enc.Hex));
-      this.secrectKey = secrectKey;
-      alert( this.secrectKey + " store this key in a safe place.");
-    } else {
-      this.secrectKey = localStorage.getItem("secrectKey");
-      alert( this.secrectKey + " store this key in a safe place.");
-    }
   }
 
   connect(username) {
     this.socket.on('connect', function() {
     });
-    this.socket.emit('login', {nsp: this.nsp, username: username, secrectKey: this.secrectKey});
+    this.socket.emit('login', {nsp: this.nsp, username: username});
   }
 
   disconnect(callback) {
@@ -52,8 +41,6 @@ class WP_Chatkit {
 
   messages(callback) {
     this.socket.on('updateMessages', function(message) {
-     // message  = chatroom.decrypt(message);
-      console.log(message);
       message  = $.parseJSON(message);
       callback(message);
     });
@@ -62,17 +49,6 @@ class WP_Chatkit {
   sendMessage(object) {
     this.socket.emit('sendMessage', object);
   }
-
- /* decrypt(hex) {
-    hex =  hex.split(":");
-    const iv = CryptoJS.enc.Hex.parse(hex[0]);
-    //const key = CryptoJS.enc.Utf8.parse("4383f7b38a6971d2cdac781d75ff1dc1");
-    return CryptoJS.AES.decrypt(hex[1],  CryptoJS.enc.Utf8.parse(this.secrectKey), {
-      iv,
-      mode: CryptoJS.mode.CBC,
-      format: CryptoJS.format.Hex
-    }).toString(CryptoJS.enc.Utf8);  
-  }*/
 
 }
 

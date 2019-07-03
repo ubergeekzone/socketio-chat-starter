@@ -23,4 +23,7 @@ cd socketio && npm install && node server/index.js
 #### V1.3 Change Log
 - Added AES 256 Bit Encryption For Messages
 
+#### V1.4 Change Log
+- Modified AES 256 Bit Encryption For Messages (server side only now)
+
 please feel free to extend or make pull requests, the goal here is to make a light weight powerful chat room solution.
