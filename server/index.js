@@ -37,7 +37,7 @@ app.use('/', express.static(chat));
 
 io.origins((origin, callback) => {
   if (origin !== 'http://localhost:3003') {
-    return callback('origin not allowed', false);
+    //return callback('origin not allowed', false);
   }
   callback(null, true);
 });
@@ -75,6 +75,6 @@ io.of(/[A-Za-z]/).on('connection', function(socket) {
 
 });
 
-http.listen(3000, function() {
-  console.log('listening on *:3003');
+http.listen(process.env.PORT || 5000, function() {
+  console.log('listening on *:'+process.env.PORT || 5000);
 });
