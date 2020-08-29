@@ -7,10 +7,6 @@ var connections = function() {
       obj.socket.username = objLogin.username;
 
       var secrectKey = enc.reEncrypt(enc.genSerectKey());
-      //store this key
-
-      //console.log(enc.genSerectKey())
-
       if(typeof obj.onlineUsers[objLogin.nsp] === "undefined") {
         obj.onlineUsers[objLogin.nsp] = [{username: objLogin.username, index: 0}];
         obj.socket.onlineUserArrayIndex = 0;
@@ -29,7 +25,7 @@ var connections = function() {
 
   self.disconnect = function(obj, callback) {
     callback(obj.socket.username);
-    obj.onlineUsers[obj.socket.nsp.name].splice(obj.onlineUsers[obj.socket.nsp.name].indexOf(obj.socket.onlineUserArrayIndex), 1); 
+    obj.onlineUsers[obj.socket.nsp.name].splice(obj.onlineUsers[obj.socket.nsp.name].indexOf(obj.socket.onlineUserArrayIndex), 1);
     self.update({io: obj.io, onlineUsers: obj.onlineUsers[obj.socket.nsp.name]});
   };
 

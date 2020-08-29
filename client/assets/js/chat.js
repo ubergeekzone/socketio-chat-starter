@@ -26,6 +26,13 @@ class WP_Chatkit {
     return username;
   }
 
+  changeRoom(object, callback) {
+    this.socket.emit('changeRoom', object);
+    this.socket.on('change', function (data) {
+      callback(data);
+    });
+  }
+
   joinRoom(object, callback) {
     this.socket.emit('joinRoom', object);
     this.socket.on('join', function (data) {
@@ -52,17 +59,21 @@ class WP_Chatkit {
 
 }
 
+var storage = {currentRoom: "public"}
+
+$("#inRoom").text(storage.currentRoom);
+
 var chatroom = new WP_Chatkit('/XLNZqA4oAx');
 
 var username = chatroom.auth(prompt("What's your name?"), function(username) {
   chatroom.connect(username);
 });
 
-chatroom.joinRoom({user: username, room: "public"}, function(data) {
+chatroom.joinRoom({user: username, room: storage.currentRoom}, function(data) {
   var message_html = $('.comment-blank').clone();
   $(message_html).find(".author").hide();
   $(message_html).find(".text").text(data);
-  $(message_html).removeClass("comment-blank");
+  $(message_html).removeClass("comment-blank").addClass("user-joined")
   $('.comments').prepend(message_html);
   console.log(data);
 });
@@ -86,11 +97,25 @@ chatroom.messages(function(message) {
   var message_html = $('.comment-blank').clone();
   $(message_html).find(".author").text(message.user);
   $(message_html).find(".text").text(message.msg);
-  $(message_html).removeClass("comment-blank");
+  $(message_html).removeClass("comment-blank").addClass("comment");
   $('.comments').prepend(message_html);
 });
 
 $(".submit").on("click", function(e) {
-  chatroom.sendMessage({user: username, msg: $("textarea").val()})
+  chatroom.sendMessage({user: username, msg: $("textarea").val(), room: storage.currentRoom})
   $("textarea").val(' ');
+});
+
+$('body').on('click', '.rooms .item', function(e) {
+  var __this = $(this);
+  room = __this.attr("href");
+  storage.currentRoom = room;
+  $("#inRoom").text(storage.currentRoom);
+  $('.comment, .user-joined').remove();
+
+  chatroom.changeRoom({room: room}, function(data) {
+    console.log(data);
+    console.log(room);
+  });
+  e.preventDefault();
 });

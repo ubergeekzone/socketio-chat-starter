@@ -14,7 +14,8 @@ var messages = function() {
       message_encrypt = enc.encrypt(JSON.stringify(message), obj.secrectKey);
       //db insert goes here
       message_decrypt = enc.decrypt(message_encrypt,  obj.secrectKey);
-      obj.io.of(obj.socket.nsp.name).to(obj.room).emit('updateMessages', message_decrypt);
+      console.log(obj);
+      obj.io.of(obj.socket.nsp.name).to(obj.socket.room).emit('updateMessages', message_decrypt);
     });
 
   };

@@ -9,6 +9,10 @@ var events = function() {
        obj.io.of(obj.socket.nsp.name).to(obj.room).emit('join', obj.username+' has joined room'); // broadcast to everyone in the room
   };
 
+  self.change = function(obj) {
+       obj.io.of(obj.socket.nsp.name).to(obj.room).emit('change', obj.username+' has changed room'); // broadcast to everyone in the room
+  };
+
 
 };
 

@@ -49,16 +49,22 @@ io.of(/[A-Za-z]/).on('connection', function(socket) {
   connections.connect({io: nsp, socket: socket, onlineUsers: onlineUsers, onlineUsersCount: onlineUsersCount, onlinesecrectKeys: onlinesecrectKeys}, function(obj, secrectKey) {
     var currentRoom = "";
     rooms.join({io: io, socket: socket}, function(object) {
-      currentRoom = object.room;
+      socket.room = object.room;
 
-      events.join({io: io, socket: socket, username: object.user, room: currentRoom});
+      rooms.change({io: io, socket: socket, currentRoom: socket.room}, function(object) {
+        console.log(object);
+      });
 
-      messages.send({io: io, socket: socket, room:currentRoom, secrectKey: secrectKey});
+      //console.log(currentRoom);
+
+      events.join({io: io, socket: socket, username: object.user, room: socket.room});
+
+      messages.send({io: io, socket: socket, secrectKey: secrectKey});
 
       socket.on('disconnect', function() {
         connections.disconnect({io: nsp, socket: socket, onlineUsers: onlineUsers}, function(user) {
           onlineUsersCount--;
-          events.exit({io: io, socket: socket, username: user, room: currentRoom});
+          events.exit({io: io, socket: socket, username: user, room: socket.room});
         });
 
       });
