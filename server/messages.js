@@ -14,7 +14,13 @@ var messages = function() {
       message_encrypt = enc.encrypt(JSON.stringify(message), obj.secrectKey);
       //db insert goes here
       message_decrypt = enc.decrypt(message_encrypt,  obj.secrectKey);
-      console.log(obj);
+      var from = obj.socket.room.split("-");
+      var to = obj.socket.room;
+      if(from[1] === obj.socket.username) {
+        to = from[1]+"-"+from[0];
+        obj.io.of(obj.socket.nsp.name).to(to).to(obj.socket.room).emit('updateMessages', message_decrypt);
+        return false;
+      }
       obj.io.of(obj.socket.nsp.name).to(obj.socket.room).emit('updateMessages', message_decrypt);
     });
 

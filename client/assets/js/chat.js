@@ -3,7 +3,9 @@ class WP_Chatkit {
   constructor(nsp) {
     this.domain = window.location.protocol+"//"+window.location.hostname+":"+window.location.port;
     this.nsp = nsp;
-    this.socket = io("https://wp-chatkit.herokuapp.com"+nsp, {transports: ['websocket'], upgrade: false});
+    //this.socket = io("https://wp-chatkit.herokuapp.com"+nsp, {transports: ['websocket'], upgrade: false});
+    this.socket = io("http://localhost:5000"+nsp, {transports: ['websocket'], upgrade: false});
+
     this.socket.on('connect_error', function(error) {
       console.log(error);
     });
@@ -89,7 +91,7 @@ chatroom.disconnect( function(data) {
 chatroom.onlineUsers(function(online) {
   $(".online-users .menu").empty();
   $.each(online, function(index, user) {
-    $(".online-users .menu").prepend($("<a/>").text(user.username).addClass("item"));
+    $(".online-users .menu").prepend($("<a/>").text(user.username).attr("href", user.username+"-"+username).addClass("item"));
   });
 });
 
@@ -106,7 +108,21 @@ $(".submit").on("click", function(e) {
   $("textarea").val(' ');
 });
 
-$('body').on('click', '.rooms .item', function(e) {
+$('body').on('click', '.rooms .menu .item', function(e) {
+  var __this = $(this);
+  room = __this.attr("href");
+  storage.currentRoom = room;
+  $("#inRoom").text(storage.currentRoom);
+  $('.comment, .user-joined').remove();
+
+  chatroom.changeRoom({room: room}, function(data) {
+    console.log(data);
+    console.log(room);
+  });
+  e.preventDefault();
+});
+
+$('body').on('click', '.online-users .menu .item', function(e) {
   var __this = $(this);
   room = __this.attr("href");
   storage.currentRoom = room;
