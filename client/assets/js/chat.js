@@ -105,7 +105,7 @@ chatroom.messages(function(message) {
 
 $(".submit").on("click", function(e) {
   chatroom.sendMessage({user: username, msg: $("textarea").val(), room: storage.currentRoom})
-  $("textarea").val(' ');
+  $("textarea").data("emojioneArea").setText('');
 });
 
 $('body').on('click', '.rooms .menu .item', function(e) {
@@ -135,3 +135,7 @@ $('body').on('click', '.online-users .menu .item', function(e) {
   });
   e.preventDefault();
 });
+
+$(document).ready(function() {
+    $("textarea").emojioneArea();
+  });
