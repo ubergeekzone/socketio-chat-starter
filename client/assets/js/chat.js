@@ -123,17 +123,19 @@ $('body').on('click', '.rooms .menu .item', function(e) {
 });
 
 $('body').on('click', '.online-users .menu .item', function(e) {
+  e.preventDefault();
   var __this = $(this);
   room = __this.attr("href");
+  if(room === username+"-"+username) {
+    alert("you can not direct message yourself.");
+    return;
+  }
   storage.currentRoom = room;
   $("#inRoom").text(storage.currentRoom);
   $('.comment, .user-joined').remove();
-
   chatroom.changeRoom({room: room}, function(data) {
     console.log(data);
-    console.log(room);
   });
-  e.preventDefault();
 });
 
 $(document).ready(function() {
