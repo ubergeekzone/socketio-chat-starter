@@ -69,6 +69,8 @@ var chatroom = new WP_Chatkit('/XLNZqA4oAx');
 
 var username = chatroom.auth(prompt("What's your name?"), function(username) {
   chatroom.connect(username);
+  $(".currentUser").text(username);
+  $(".currentUserAvatar").attr("src", "https://avatars.dicebear.com/api/initials/"+username+".svg");
 });
 
 chatroom.joinRoom({user: username, room: storage.currentRoom}, function(data) {
