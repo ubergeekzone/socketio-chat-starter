@@ -3,8 +3,8 @@ class WP_Chatkit {
   constructor(nsp) {
     this.domain = window.location.protocol+"//"+window.location.hostname+":"+window.location.port;
     this.nsp = nsp;
-    //this.socket = io("https://wp-chatkit.herokuapp.com"+nsp, {transports: ['websocket'], upgrade: false});
-    this.socket = io("http://localhost:5000"+nsp, {transports: ['websocket'], upgrade: false});
+    this.socket = io("https://wp-chatkit.herokuapp.com"+nsp, {transports: ['websocket'], upgrade: false});
+    //this.socket = io("http://localhost:5000"+nsp, {transports: ['websocket'], upgrade: false});
 
     this.socket.on('connect_error', function(error) {
       console.log(error);
