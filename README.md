@@ -32,4 +32,7 @@ cd socketio && npm install && PORT=5000 node server/index.js
 #### V1.6 Change Log
 - Added Direct Messages for Online User List
 
+#### V1.7 Change Log
+- UI was changed to Tailwind CSS
+
 please feel free to extend or make pull requests, the goal here is to make a light weight powerful chat room solution.
