@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "axios": "^0.21.4",
     "express": "^4.15.2",
     "mysql2": "^1.6.5",
+    "node-rest-client": "^3.1.0",
     "sequelize": "^5.8.12",
     "socket.io": "^2.2.0"
   },
-  "devDependencies": {},
   "scripts": {
     "start": "node server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -16,6 +16,8 @@ var public = path.join(__dirname, '/../client/assets/');
 
 console.log(sequelize);*/
 
+var axios = require('axios');
+
 var onlineUsers = {}, onlineUsersCount = 0, onlinesecrectKeys = {};
 
 var connections = require(__dirname+"/connections.js");
@@ -35,16 +37,27 @@ app.use('/assets',express.static(public));
 var chat = path.join(__dirname, '/../client/');
 app.use('/', express.static(chat));
 
-io.origins((origin, callback) => {
-  if (origin !== 'http://localhost:3003') {
-    //return callback('origin not allowed', false);
-  }
-  callback(null, true);
-});
-
 io.of(/[A-Za-z]/).on('connection', function(socket) {
 
   const nsp = socket.nsp;
+  
+  /*const res = axios.get('https://domain.com/wp-json/wp/v2/licenses_key/', {
+  auth: {
+    username: '',
+    password: ''
+  },
+  proxy: false
+  }) .then(function (response) {
+    response.data.forEach(function(item) {
+      if("/"+item.domain_install_path !== nsp.name) {
+        io.origins((origin, callback) => {
+          return callback('origin not allowed', false);
+          //callback(null, true);
+        });
+        return;
+      }
+    });
+  })*/
 
   connections.connect({io: nsp, socket: socket, onlineUsers: onlineUsers, onlineUsersCount: onlineUsersCount, onlinesecrectKeys: onlinesecrectKeys}, function(obj, secrectKey) {
     var currentRoom = "";
