@@ -18,7 +18,7 @@ console.log(sequelize);*/
 
 var axios = require('axios');
 
-var onlineUsers = {}, onlineUsersCount = 0, onlinesecrectKeys = {};
+var onlineUsers = [], onlineUsersCount = 0, onlinesecrectKeys = {};
 
 var connections = require(__dirname+"/connections.js");
 var connections = new connections();
@@ -37,10 +37,14 @@ app.use('/assets',express.static(public));
 var chat = path.join(__dirname, '/../client/');
 app.use('/', express.static(chat));
 
+
+
 io.of(/[A-Za-z]/).on('connection', function(socket) {
 
   const nsp = socket.nsp;
-  
+
+
+
   /*const res = axios.get('https://domain.com/wp-json/wp/v2/licenses_key/', {
   auth: {
     username: '',
